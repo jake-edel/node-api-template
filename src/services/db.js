@@ -5,7 +5,7 @@ const conn = mysql.createConnection({
     user: process.env.USER,
     password: process.env.PASSWORD,
     port: process.env.PORT,
-    database: 'testdb',
+    database: process.env.DATABASE,
     socketPath: '/var/run/mysqld/mysqld.sock'
 })
 
