@@ -13,26 +13,6 @@ const getAllRows = (req, res, next) => {
 	})
 }
 
-const getRow = (req, res, next) => {
-	if (!req.body.id) return next(new AppError('No row id found', 404))
-
-	if (!Number.isInteger(parseFloat(req.body.id))) return next(new AppError('Row id must be an integer'), 400)
-	conn.query(
-		'SELECT * FROM test_table WHERE id = ?',
-		[req.body.id],
-		(err, data, fields) => {
-			if (err) return next(new AppError(err, 500))
-			res.status(200).json({
-				status: 'successs',
-				length: data?.length,
-				data: data,
-				controller: 'getRow'
-			})
-		}
-	)
-}
-
-
 const createRow = (req, res, next) => {
 	if (!req.body) return next(new AppError('No form data found', 404 ))
 
@@ -51,11 +31,11 @@ const createRow = (req, res, next) => {
 }
 
 const updateRow = (req, res, next) => {
-	if (!req.params.id) return next(new AppError('No Row id found', 404))
+	if (!req.body.id) return next(new AppError('No Row id found', 404))
 	
-	if (!Number.isInteger(parseFloat(req.params.id))) return next(new AppError('Row id must be an integer'), 400)
+	if (!Number.isInteger(parseFloat(req.body.id))) return next(new AppError('Row id must be an integer'), 400)
 
-	const values = [req.params.data, req.params.id]
+	const values = [req.body.data, req.body.id]
 	conn.query(
 		'UPDATE test_table SET data = ? WHERE id = ?',
 		values,
@@ -65,6 +45,25 @@ const updateRow = (req, res, next) => {
 				status: 'success',	
 				message: 'Row updated',
 				controller: 'updateRow'
+			})
+		}
+	)
+}
+
+const readRow = (req, res, next) => {
+	if (!req.body.id) return next(new AppError('No row id found', 404))
+
+	if (!Number.isInteger(parseFloat(req.body.id))) return next(new AppError('Row id must be an integer'), 400)
+	conn.query(
+		'SELECT * FROM test_table WHERE id = ?',
+		[req.body.id],
+		(err, data, fields) => {
+			if (err) return next(new AppError(err, 500))
+			res.status(200).json({
+				status: 'successs',
+				length: data?.length,
+				data: data,
+				controller: 'readRow'
 			})
 		}
 	)
@@ -92,7 +91,7 @@ const deleteRow = (req, res, next) => {
 export default {
 	getAllRows,
 	createRow,
-	getRow,
+	readRow,
 	updateRow,
 	deleteRow
 }
