@@ -5,16 +5,13 @@ const router = express.Router()
 
 router
     .route('/')
-    // .get(controllers.getAllRows)
-    .get(controllers.getRow)
+    .get(controllers.getAllRows)
     .post(controllers.createRow)
     .delete(controllers.deleteRow)
-
+    .put(controllers.updateRow)
 
 router
     .route('/:id')
-//     .get(controllers.getRow)
-//     .put(controllers.updateRow)
-    // .delete(controllers.deleteRow)
+    .get(controllers.readRow)
 
 export default router
