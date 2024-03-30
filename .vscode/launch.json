@@ -10,10 +10,6 @@
 			"name": "Launch Program",
 			"program": "${workspaceRoot}/src/app.js",
 			"envFile": "${workspaceFolder}/.env",
-			"env": {
-					"NODE_ENV": "localhost",
-					"PORT": "3001"
-			},
 		},
 		{
 			"type": "node",

@@ -1,30 +1,30 @@
 import express from 'express'
 import router from './routes/index.js'
+import cors from 'cors'
 import AppError from './utils/appError.js'
 import errorHandler from './utils/errorHandler.js'
 import conn from './services/db.js'
 
 const app = express()
-const PORT = 3001
 
 app
-	.use(express.json())
 	.use(router)
-	
+	.use(errorHandler)
+	.use(express.json())
+	.use(cors())
+
 app.all('*', (req, res, next) => {
+	console.log('Incoming Request: ', req)
 	next(new AppError(`The URL ${req.originalUrl} does not exist`, 404))
 })
 
-app.use(errorHandler)
-
-app.listen(PORT, (err) => {
+app.listen(process.env.PORT, (err) => {
 	if (err) console.log(err);
-	console.log('Server listening on PORT: ', PORT)
+	console.log('Server listening on PORT: ', process.env.PORT)
 })
 
 conn.connect(err => {
     if (err) throw err;
-    console.log('Connected!')
 })
 
 // `node app.js` to start API
