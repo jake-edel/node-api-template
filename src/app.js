@@ -8,13 +8,12 @@ import conn from './services/db.js'
 const app = express()
 
 app
-	.use(router)
-	.use(errorHandler)
-	.use(express.json())
 	.use(cors())
+	.use(express.json())
+	.use(errorHandler)
+	.use(router)
 
 app.all('*', (req, res, next) => {
-	console.log('Incoming Request: ', req)
 	next(new AppError(`The URL ${req.originalUrl} does not exist`, 404))
 })
 
