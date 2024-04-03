@@ -51,12 +51,12 @@ const updateRow = (req, res, next) => {
 }
 
 const readRow = (req, res, next) => {
-	if (!req.body.id) return next(new AppError('No row id found', 404))
+	if (!req.params.id) return next(new AppError('No row id found', 404))
 
-	if (!Number.isInteger(parseFloat(req.body.id))) return next(new AppError('Row id must be an integer'), 400)
+	if (!Number.isInteger(parseFloat(req.params.id))) return next(new AppError('Row id must be an integer'), 400)
 	conn.query(
 		'SELECT * FROM test_table WHERE id = ?',
-		[req.body.id],
+		[req.params.id],
 		(err, data, fields) => {
 			if (err) return next(new AppError(err, 500))
 			res.status(200).json({
