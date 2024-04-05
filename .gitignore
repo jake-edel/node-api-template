@@ -1,5 +1,8 @@
 # Dependency directories
 node_modules/
 
-# dotenv environment variables file
+# Environment variables file
 .env
+
+# Editor Config
+.vscode/tasks.json
