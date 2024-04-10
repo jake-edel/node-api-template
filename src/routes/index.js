@@ -3,8 +3,6 @@ import controllers from '../controllers/index.js'
 
 const router = express.Router()
 
-router.route('/')
-
 router
     .route('/testTable')
     .get(controllers.getAllRows)
